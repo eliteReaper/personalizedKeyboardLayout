@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+#pragma GCC optimize ("O3")
+using namespace std;
+ typedef long long int ll;
+typedef unsigned long long int ull;
+typedef vector<int> vi;
+typedef set<int> si;
+typedef set<ll> sll;
+typedef vector<ll> vll;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef long double ld;
+ #define pvec(v) for(auto e: v) cout << e << " ";cout << endl;
+#define IO ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
+#define rep(i, a, b) for(int i = (a); i<(b); ++i)
+#define pb push_back
+#define INF 1000000005
+#define inf 1000000000000000
+#define MOD 1000000007
+#define mod 998244353
+#define all(v) v.begin(), v.end()
+#define chk cerr<<">>>>>>>>>>>>>>>>>>>>>>>...Checking...<<<<<<<<<<<<<<<<<<<<<<<"<<endl;
+ #define sf(a) scanf("%d", &a)
+#define sfll(a) scanf("%lld", &a)
+#define sfc(a) scanf("%c", &a)
+#define gcu getchar_unlocked
+ #define pf(a) printf("%d", a)
+#define pfll(a) printf("%lld", a)
+#define pfc(c) printf("%c ", c)
+#define pcu putchar_unlocked
+ #define pfln(a) printf("%d\n", a)
+#define pfllln(a) printf("%lld\n", a)
+#define pfcln(c) printf("%c\n", c)
+ void debug_out() { cerr << endl; }
+template <typename Head, typename... Tail>
+void debug_out(Head H, Tail... T) {
+  cerr << " " << to_string(H);
+  debug_out(T...);
+}
+#define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+ ll power(ll x, ll y, ll p = MOD){  
+  ll res = 1LL; 
+  x = x % p;
+  // if (y == 0) return 1LL;
+  if (x == 0) return 0;
+  while (y > 0){
+    if (y & 1LL)  
+      res = (res*x) % p;
+    y = y>>1LL; 
+    x = (x*x) % p;  
+  }  
+  return res;  
+}
+ ll modInv(ll a, ll p = MOD) {
+  assert(__gcd(a, p) == 1);
+  return power(a, p - 2, p);
+}
+ // ll *fac;
+ // ll nCr(ll n, ll r) {
+//   ll num = fac[n];
+//   ll den = (fac[r] * fac[n - r]) % MOD;
+ //   return (num * modInv(den)) % MOD;
+// }
