@@ -4,7 +4,7 @@ class GAInitiator {
     std::vector<KeyboardLayout*> matingPool;
     std::vector<KeyboardLayout*> offSprings;  // TODO: Not being used
     std::vector<KeyboardLayout*> nextGeneration;
-    // static std::map<char, int> mapper;
+    std::map<char, int> mapper;
     long long int globalSeed;
     bool pollEvents;
 
@@ -13,10 +13,10 @@ class GAInitiator {
     size_t getTimeFromEpoch();
     void assertPerfectOrder(KeyboardLayout*);
 
-    static double calcHandAlteration(KeyboardLayout*);
-    static double calcFingerAlternation(KeyboardLayout*);
-    static double calcBigStepPenalty(KeyboardLayout*);
-    static double calcKeyPositionComfort(KeyboardLayout*);
+    static double calcHandAlteration(KeyboardLayout*, std::map<char, int>);
+    static double calcFingerAlternation(KeyboardLayout*, std::map<char, int>);
+    static double calcBigStepPenalty(KeyboardLayout*, std::map<char, int>);
+    static double calcKeyPositionComfort(KeyboardLayout*, std::map<char, int>);
     double calcFitness(KeyboardLayout*);
     void assignFitness(KeyboardLayout*);
 

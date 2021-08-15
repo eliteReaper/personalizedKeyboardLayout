@@ -15,9 +15,9 @@ GAInitiator::GAInitiator(long long int seed = defaultSeed, bool poll = false) {
     }
     pollEvents = poll;
 
-    // for(int i = 0; i < (int)charset.size(); ++i) {
-    //     mapper[charset[i]] = i;
-    // }
+    for(int i = 0; i < (int)charset.size(); ++i) {
+        mapper[charset[i]] = i;
+    }
 }
 
 size_t GAInitiator::getTimeFromEpoch() {
@@ -34,12 +34,12 @@ void GAInitiator::initiate() {
     run();
 }
 
-double GAInitiator::calcKeyPositionComfort(KeyboardLayout* kl) {
+double GAInitiator::calcKeyPositionComfort(KeyboardLayout* kl, std::map<char, int> mapper) {
     double res = 0.0;
-    std::map<char, int> mapper;
-    for(int i = 0; i < (int)charset.size(); ++i) {
-        mapper[charset[i]] = i;
-    }
+    // std::map<char, int> mapper;
+    // for(int i = 0; i < (int)charset.size(); ++i) {
+    //     mapper[charset[i]] = i;
+    // }
     for(int i = 0 ;i < numberOfKeys; ++i) {
         double f1 = charFreq[mapper[kl->getKeyAtIndex(i).getPrimary()]];
         double f2 = charFreq[mapper[kl->getKeyAtIndex(i).getSecondary()]];
@@ -48,13 +48,13 @@ double GAInitiator::calcKeyPositionComfort(KeyboardLayout* kl) {
     return res;
 }
 
-double GAInitiator::calcBigStepPenalty(KeyboardLayout *kl) {
+double GAInitiator::calcBigStepPenalty(KeyboardLayout *kl, std::map<char, int> mapper) {
     double res = 0.0;
     int rowSize = (int)charset.size();
-    std::map<char, int> mapper;
-    for(int i = 0; i < (int)charset.size(); ++i) {
-        mapper[charset[i]] = i;
-    }
+    // std::map<char, int> mapper;
+    // for(int i = 0; i < (int)charset.size(); ++i) {
+    //     mapper[charset[i]] = i;
+    // }
     for(int i = 0; i < numberOfKeys; ++i) {
         for(int j = 0; j < numberOfKeys; ++j) {
             int r, c;
@@ -86,13 +86,13 @@ double GAInitiator::calcBigStepPenalty(KeyboardLayout *kl) {
     return res;
 }
 
-double GAInitiator::calcFingerAlternation(KeyboardLayout *kl) {
+double GAInitiator::calcFingerAlternation(KeyboardLayout *kl, std::map<char, int> mapper) {
     double res = 0.0;
     int rowSize = (int)charset.size();
-    std::map<char, int> mapper;
-    for(int i = 0; i < (int)charset.size(); ++i) {
-        mapper[charset[i]] = i;
-    }
+    // std::map<char, int> mapper;
+    // for(int i = 0; i < (int)charset.size(); ++i) {
+    //     mapper[charset[i]] = i;
+    // }
     for(int i = 0; i < numberOfKeys; ++i) {
         for(int j = 0; j < numberOfKeys; ++j) {
             int r, c;
@@ -123,13 +123,13 @@ double GAInitiator::calcFingerAlternation(KeyboardLayout *kl) {
     return res;
 }
 
-double GAInitiator::calcHandAlteration(KeyboardLayout *kl) {
+double GAInitiator::calcHandAlteration(KeyboardLayout *kl, std::map<char, int> mapper) {
     double res = 0.0;
     int rowSize = (int)charset.size();
-    std::map<char, int> mapper;
-    for(int i = 0; i < (int)charset.size(); ++i) {
-        mapper[charset[i]] = i;
-    }
+    // std::map<char, int> mapper;
+    // for(int i = 0; i < (int)charset.size(); ++i) {
+    //     mapper[charset[i]] = i;
+    // }
     for(int i = 0; i < numberOfKeys; ++i) {
         for(int j = 0; j < numberOfKeys; ++j) {
             int r, c;
@@ -161,10 +161,10 @@ double GAInitiator::calcHandAlteration(KeyboardLayout *kl) {
 
 double GAInitiator::calcFitness(KeyboardLayout* kl) {
     double param1 = 0.0, param2 = 0.0, param3 = 0.0, param4 = 0.0, param5 = 0.0;
-    std::future<double> ret1 = std::async(&calcKeyPositionComfort, kl);
-    std::future<double> ret2 = std::async(&calcHandAlteration, kl);
-    std::future<double> ret3 = std::async(&calcFingerAlternation, kl);
-    std::future<double> ret4 = std::async(&calcBigStepPenalty, kl);
+    std::future<double> ret1 = std::async(&calcKeyPositionComfort, kl, mapper);
+    std::future<double> ret2 = std::async(&calcHandAlteration, kl, mapper);
+    std::future<double> ret3 = std::async(&calcFingerAlternation, kl, mapper);
+    std::future<double> ret4 = std::async(&calcBigStepPenalty, kl, mapper);
     param1 = ret1.get();
     param2 = ret2.get();
     param3 = ret3.get();
